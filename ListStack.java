@@ -18,9 +18,6 @@ public class ListStack implements BKStack, Iterable<Double> {
         private int modifyCountCheck = modifyCount;
 
         public boolean hasNext(){
-            //System.out.println("position: " + curr.next.data);
-            //System.out.println("tail: " + tail.data);
-            //curr = curr.next;
             return curr.next != null;
         }
 
@@ -50,11 +47,28 @@ public class ListStack implements BKStack, Iterable<Double> {
 
     }
 
+    /**
+    * This method checks whether the linked list is empty by checking whether the head node is null. 
+    * If the head node is null, then the function returns true and the linked list is empty.
+    * Time Complexity: O(1)
+    */
+    
     public boolean isEmpty(){
         return head == null;
     }
 
-    public int count(){ //FIXME
+    /**
+    * This method counts the number of nodes in the linked list. As the initial conditional statement,
+    * it utilizes the isEmpty function to check whether the linked list is empty, thus having a count 
+    * of zero. The count variable is instantiated as 1 as the hasNext method from the Iterator
+    * implementation prevents the enhanced for loop from counting the last node. The use of the iterator
+    * in the enhanced for loop reduces the time taken for this operation by providing a pointer to 
+    * the last element counted so that the all the nodes need not be traversed every time the function
+    * is called. 
+    * Time Complexity: O(n)
+    */
+    
+    public int count(){ 
         int count = 1;
 
         if(isEmpty()){
@@ -64,7 +78,6 @@ public class ListStack implements BKStack, Iterable<Double> {
         for(Iterator<Double> i = this.iterator(); i.hasNext();) {
             count++;
             Double item = i.next();
-            //System.out.println(item);
         }
         return count;
     }
@@ -107,9 +120,6 @@ public class ListStack implements BKStack, Iterable<Double> {
         if(isEmpty()){
             throw new EmptyStackException();
         }
-//        while(curr.next != null){
-//            curr = curr.next;
-//        }
         return tail.data;
     }
 
