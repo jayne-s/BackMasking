@@ -8,10 +8,6 @@ public class ListStack implements BKStack, Iterable<Double> {
     private ListStackNode tail;
     private int modifyCount = 0;
 
-    public Iterator<Double> iterator() {
-        return new ListStackIterator();
-    }
-
     private class ListStackIterator implements Iterator<Double> {
 
         private ListStackNode curr = head;
@@ -45,6 +41,15 @@ public class ListStack implements BKStack, Iterable<Double> {
             modifyCountCheck++;
         }
 
+    }
+
+    /**
+    * This method returns an instance of the ListStackIterator when invoked. 
+    * Time Complexity: O(1)
+    */
+    
+    public Iterator<Double> iterator() {
+        return new ListStackIterator();
     }
 
     /**
