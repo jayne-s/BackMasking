@@ -104,7 +104,7 @@ public class ListStack implements BKStack, Iterable<Double> {
         tail = node;
         modifyCount++;
     }
-
+    
     public double pop(){
         ListStackNode curr = head;
         if(isEmpty()){
@@ -120,15 +120,19 @@ public class ListStack implements BKStack, Iterable<Double> {
         return end.data;
     }
 
+    /**
+    * This method returns the double value stored in the tail node, if the linked list is not empty.  
+    * Time Complexity: O(1)
+    */
+    
     public double peek(){
-        ListStackNode curr = head;
         if(isEmpty()){
             throw new EmptyStackException();
         }
         return tail.data;
     }
 
-    public void printItems(){
+    public void printItems(){ //testing method to remove
         ListStackNode curr = head;
         while(curr != null){
             System.out.println(curr.data + " ");
