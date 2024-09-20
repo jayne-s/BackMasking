@@ -1,6 +1,5 @@
 import java.util.ConcurrentModificationException;
 import java.util.EmptyStackException;
-import java.util.Iterator;
 
 public class ListStack implements BKStack, Iterable<Double> {
 
@@ -8,14 +7,30 @@ public class ListStack implements BKStack, Iterable<Double> {
     private ListStackNode tail;
     private int modifyCount = 0;
 
-    private class ListStackIterator implements Iterator<Double> {
+    private class ListStackIterator implements java.util.Iterator<Double> {
 
         private ListStackNode curr = head;
         private int modifyCountCheck = modifyCount;
 
+        /**
+        * This method checks whether there is another node in the linked 
+        * list by checking whether the current node's next pointer is null 
+        * and returning a boolean value. 
+        * Time Complexity: O(1)
+        */
+
         public boolean hasNext(){
             return curr.next != null;
         }
+
+        /**
+        * This method returns the current node's double value and goes to 
+        * the next node in the linked list. Before performing this action, 
+        * it checks whether there is a modification to the linked list outside
+        * of the iterator when its methods are being called. It also ensures
+        * that there is a next node by calling the hasNext function.
+        * Time Complexity: O(1)
+        */
 
         public Double next() {
             if(!hasNext()){
@@ -30,6 +45,14 @@ public class ListStack implements BKStack, Iterable<Double> {
             curr = curr.next;
             return item;
         }
+
+         /**
+        * This method removes the current node and links the previous node 
+        * to the next node and vice versa. Before performing this action, 
+        * it checks whether there is a modification to the linked list outside
+        * of the iterator when its methods are being called. 
+        * Time Complexity: O(1)
+        */
 
         public void remove(){
             if(modifyCount != modifyCountCheck){
@@ -48,7 +71,7 @@ public class ListStack implements BKStack, Iterable<Double> {
     * Time Complexity: O(1)
     */
     
-    public Iterator<Double> iterator() {
+    public java.util.Iterator<Double> iterator() {
         return new ListStackIterator();
     }
 
@@ -80,43 +103,54 @@ public class ListStack implements BKStack, Iterable<Double> {
             return 0;
         }
 
-        for(Iterator<Double> i = this.iterator(); i.hasNext();) {
+        for(java.util.Iterator<Double> i = this.iterator(); i.hasNext();) {
             count++;
-            Double item = i.next();
+            i.next();
         }
         return count;
     }
 
+    /**
+    * This method adds a new node with a specified double value to the end of 
+    * the linked list. First, the method checks whether the linked list is empty. If
+    * it is, then the node is inserted as the head. For the insertion of subsequent 
+    * nodes, we use the tail node to specify that the tail node points to the new node, 
+    * the new node points to the tail node, and the new node will become the new tail node.
+    * Time Complexity: O(1)
+    */
+    
     public void push(double d){
         ListStackNode node = new ListStackNode(d);
-        ListStackNode last = head;
         if(isEmpty()){
             head = node;
             tail = node;
             modifyCount++;
             return;
         }
-        while(last.next != null) {
-            last = last.next;
-        }
-        last.next = node;
-        node.prev = last;
+       
+        tail.next = node;
+        node.prev = tail;
         tail = node;
         modifyCount++;
     }
+
+    /**
+    * This method removes the last node in the linked list. Before performing
+    * this action, the method checks whether the linked list is empty so that 
+    * a nonexistent node is not removed. For the deletion of the end node, we
+    * direct the second last node in the linked list to point to null and set this
+    * node to be the new tail, while returning the double value stored in the 
+    * old tail node. 
+    * Time Complexity: O(1)
+    */
     
     public double pop(){
-        ListStackNode curr = head;
         if(isEmpty()){
             throw new EmptyStackException();
         }
-        while(curr.next.next != null){
-            curr = curr.next;
-        }
-        ListStackNode end = curr.next;
-        curr.next = null;
-        modifyCount++;
-        tail = end.prev;
+        ListStackNode end = tail;
+        tail.prev.next = null;
+        tail = tail.prev; 
         return end.data;
     }
 
