@@ -2,9 +2,9 @@
 
 # Student Information
 
-**Name:** Jayne Srinivas
-**NetID:** JPS210003
-**Section:** CS 3345.002
+| **Name:** Jayne Srinivas | 
+**NetID:** JPS210003 |
+**Section:** CS 3345.002 |
 
 # Implementation Details
 
