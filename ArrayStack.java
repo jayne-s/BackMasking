@@ -3,8 +3,8 @@ public class ArrayStack implements BKStack{
 
     private double[] items;
     private int size;
-    private final int INITIAL_CAPACITY = 5;
-    private int capacity = 5;
+    private final int INITIAL_CAPACITY = 100;
+    private int capacity = 100;
 
     /**
     * This constructor method creates a new array with a size of zero and 
@@ -64,7 +64,7 @@ public class ArrayStack implements BKStack{
     * last element is removed, the size variable is decremented. Additionally, the array's 
     * capacity can be resized if the number of elements in the array is less than or equal
     * to half of the current capacity. 
-    * Time Complexity: O(n)
+    * Time Complexity: O(1) since for the purposes of this project, the stack size will only increase
     */
 
     public double pop(){
@@ -81,9 +81,8 @@ public class ArrayStack implements BKStack{
     }
 
     /**
-    * This method returns the double value stored at the end of the array,
-    * if the array is not empty. It uses the count method to retrieve the 
-    * size of the array and subtracts 1 from it to retrieve the corresponding index. 
+    * This method returns the double value stored at the beginning of the array,
+    * if the array is not empty. 
     * Time Complexity: O(1)
     */
 
@@ -91,7 +90,7 @@ public class ArrayStack implements BKStack{
         if(isEmpty()){
             throw new java.util.EmptyStackException();
         }
-        return items[count()-1];
+        return items[0];
     }
 
     /**

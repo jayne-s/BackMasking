@@ -3,8 +3,28 @@ import java.util.EmptyStackException;
 
 public class ListStack implements BKStack, Iterable<Double> {
 
-    private ListStackNode head;
-    private ListStackNode tail;
+    /**
+    * Implementation of the Node class which creates an object of type ListStackNode
+    * that contains a double and two pointers, next and prev. The constructor is invoked
+    * each time a new node is added to the list through the use of the push() method. 
+    * When multiple ListStackNodes are connected to one another using
+    * the corresponding next and prev pointers, they form a doubly linked list.
+    * Time Complexity: O(1)
+    */
+    private class ListStackNode {
+        ListStackNode next;
+        ListStackNode prev;
+        Double data;
+        ListStackNode(Double d){
+            data = d;
+            next = null;
+            prev = null;
+        }
+    }
+
+
+    private static ListStackNode head;
+    private static ListStackNode tail;
     private int modifyCount = 0;
 
     private class ListStackIterator implements java.util.Iterator<Double> {
@@ -76,8 +96,9 @@ public class ListStack implements BKStack, Iterable<Double> {
     */
 
     public ListStack(){
-        head.next = tail;
-        tail.prev = head;
+        head = null;
+        tail = null;
+        //head.next = tail;
         modifyCount++;
     }
 
@@ -136,17 +157,18 @@ public class ListStack implements BKStack, Iterable<Double> {
     
     public void push(double d){
         ListStackNode node = new ListStackNode(d);
-        if(isEmpty()){
+        if(tail == null){
             head = node;
             tail = node;
             modifyCount++;
             return;
+        } else {
+            tail.next = node;
+            node.prev = tail;
+            tail = node;
+            modifyCount++;
         }
-       
-        tail.next = node;
-        node.prev = tail;
-        tail = node;
-        modifyCount++;
+        
     }
 
     /**
@@ -160,13 +182,40 @@ public class ListStack implements BKStack, Iterable<Double> {
     */
     
     public double pop(){
-        if(isEmpty()){
+       // ListStackNode n = tail;
+        if(tail == null){
             throw new EmptyStackException();
+        } 
+        
+       else if (tail == head){
+            double data = tail.data;
+            tail = null;
+            head = null;
+            return data;
+        } 
+
+        else {
+            double data = tail.data;
+            tail = tail.prev;
+            tail.next = null;
+            return data;
         }
-        ListStackNode end = tail;
-        tail.prev.next = null;
-        tail = tail.prev; 
-        return end.data;
+        
+       
+       // n = null;
+
+        // if(end.data == null){
+        //     throw new EmptyStackException();
+        // }
+
+        // ListStackNode secondLast = head;
+        // while (secondLast.next.next != null) {
+        //     secondLast = secondLast.next;
+        // }
+        // double val = tail.data;
+        // secondLast.next = null;
+        //return val;
+
     }
 
     /**
@@ -178,7 +227,14 @@ public class ListStack implements BKStack, Iterable<Double> {
         if(isEmpty()){
             throw new EmptyStackException();
         }
-        return tail.data;
+        return head.data;
     }
 
 }
+
+       // ListStackNode end = tail;
+        // if(tail != null){
+        //     tail.prev.next = null;
+        // }
+        //System.out.println(tail.data);
+        // 
