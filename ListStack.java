@@ -46,7 +46,7 @@ public class ListStack implements BKStack, Iterable<Double> {
             return item;
         }
 
-         /**
+        /**
         * This method removes the current node and links the previous node 
         * to the next node and vice versa. Before performing this action, 
         * it checks whether there is a modification to the linked list outside
@@ -57,6 +57,8 @@ public class ListStack implements BKStack, Iterable<Double> {
         public void remove(){
             if(modifyCount != modifyCountCheck){
                 throw new ConcurrentModificationException();
+            } else if (!hasNext()){
+                throw new EmptyStackException();
             }
 
             curr.prev.next = curr.next;
@@ -64,6 +66,19 @@ public class ListStack implements BKStack, Iterable<Double> {
             modifyCountCheck++;
         }
 
+    }
+
+    /**
+    * This constructor method makes the linked list empty when invoked. To do this,
+    * the head node will point to the tail and the tail will point to the head,
+    * which makes a list of size zero.  
+    * Time Complexity: O(1)
+    */
+
+    public ListStack(){
+        head.next = tail;
+        tail.prev = head;
+        modifyCount++;
     }
 
     /**
@@ -164,15 +179,6 @@ public class ListStack implements BKStack, Iterable<Double> {
             throw new EmptyStackException();
         }
         return tail.data;
-    }
-
-    public void printItems(){ //testing method to remove
-        ListStackNode curr = head;
-        while(curr != null){
-            System.out.println(curr.data + " ");
-            curr = curr.next;
-        }
-        System.out.println();
     }
 
 }
