@@ -64,7 +64,7 @@ public class ArrayStack implements BKStack{
     * last element is removed, the size variable is decremented. Additionally, the array's 
     * capacity can be resized if the number of elements in the array is less than or equal
     * to half of the current capacity. 
-    * Time Complexity: O(1) since for the purposes of this project, the stack size will only increase
+    * Time Complexity: O(n) 
     */
 
     public double pop(){
