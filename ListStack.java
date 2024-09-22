@@ -70,7 +70,8 @@ public class ListStack implements BKStack, Iterable<Double> {
         * This method removes the current node and links the previous node 
         * to the next node and vice versa. Before performing this action, 
         * it checks whether there is a modification to the linked list outside
-        * of the iterator when its methods are being called. 
+        * of the iterator when its methods are being called. This method is not 
+        * used in the program and was completed for practice purposes. 
         * Time Complexity: O(1)
         */
 
@@ -98,8 +99,6 @@ public class ListStack implements BKStack, Iterable<Double> {
     public ListStack(){
         head = null;
         tail = null;
-        //head.next = tail;
-        modifyCount++;
     }
 
     /**
@@ -182,7 +181,7 @@ public class ListStack implements BKStack, Iterable<Double> {
     */
     
     public double pop(){
-       // ListStackNode n = tail;
+
         if(tail == null){
             throw new EmptyStackException();
         } 
@@ -191,6 +190,7 @@ public class ListStack implements BKStack, Iterable<Double> {
             double data = tail.data;
             tail = null;
             head = null;
+            modifyCount++;
             return data;
         } 
 
@@ -198,24 +198,10 @@ public class ListStack implements BKStack, Iterable<Double> {
             double data = tail.data;
             tail = tail.prev;
             tail.next = null;
+            modifyCount++;
             return data;
         }
         
-       
-       // n = null;
-
-        // if(end.data == null){
-        //     throw new EmptyStackException();
-        // }
-
-        // ListStackNode secondLast = head;
-        // while (secondLast.next.next != null) {
-        //     secondLast = secondLast.next;
-        // }
-        // double val = tail.data;
-        // secondLast.next = null;
-        //return val;
-
     }
 
     /**
@@ -231,10 +217,3 @@ public class ListStack implements BKStack, Iterable<Double> {
     }
 
 }
-
-       // ListStackNode end = tail;
-        // if(tail != null){
-        //     tail.prev.next = null;
-        // }
-        //System.out.println(tail.data);
-        // 
